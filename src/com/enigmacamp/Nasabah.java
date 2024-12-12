@@ -55,14 +55,5 @@ public class Nasabah {
         this.birthDate = birthDate;
     }
 
-    @Override
-    public String toString() {
-        return "Nasabah{" +
-                "id=" + id +
-                ", fullName='" + fullName + '\'' +
-                ", nik='" + nik + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", birthDate='" + birthDate + '\'' +
-                '}';
-    }
+
 }

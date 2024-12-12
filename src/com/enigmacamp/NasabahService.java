@@ -9,6 +9,15 @@ public class NasabahService {
 
     public NasabahService(){}
 
+    //Menampilkan Data Nasabah
+    public void read(){
+        for (int i = 0; i < nasabahCount; i++) {
+            if (items[i] != null) {
+                System.out.println("ID: " + items[i].getId() + ", Nama: " + items[i].getFullName()+", NIK: "+items[i].getNik()+ ", No HP: "+items[i].getPhoneNumber()+ ", Tanggal Lahir : "+items[i].getBirthDate());
+            }
+        }
+    }
+
     //Registrasi Nasabah
     public void create(Nasabah nasabah){
         try {
@@ -33,8 +42,7 @@ public class NasabahService {
 //            System.out.println(e.getMessage());
 //        }
     }
-
-
+//
 
     public Nasabah[] getItems() {
         return items;
