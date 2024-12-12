@@ -24,14 +24,14 @@ public class NasabahService implements NasabahInterface{
                 throw new ArrayIndexOutOfBoundsException("Kapasitas Penuh");
             }
             if (!isUnik(nasabah.getId(), nasabah.getNik(), nasabah.getPhoneNumber())){
-                throw new Exception("Data sudah tersedia");
+                throw new NasabahException("Data sudah tersedia");
             }
             items[nasabahCount] = nasabah;
             nasabahCount++;
             System.out.println("Nasabah Berhasil Ditambahkan");
         }catch (ArrayIndexOutOfBoundsException e){
             System.out.println(e.getMessage());
-        }catch (Exception e){
+        }catch (NasabahException e){
             System.out.println(e.getMessage());
         }
 //        try {
@@ -48,7 +48,7 @@ public class NasabahService implements NasabahInterface{
             for (int i = 0; i < nasabahCount; i++) {
                 if (items[i] != null && items[i].getId()==id){
                     if (!isUnik(nasabahBaru.getId(),nasabahBaru.getNik(),nasabahBaru.getPhoneNumber())){
-                        throw new Exception("Data Gagal di Update\n");
+                        throw new NasabahException("Data Gagal di Update\n");
                     }
                     items[i] = nasabahBaru;
                     System.out.println("Data Berhasil di Update\n");
@@ -57,10 +57,10 @@ public class NasabahService implements NasabahInterface{
                 }
             }
             if (!cariData){
-                throw new Exception("Data Tidak Tersedia");
+                throw new NasabahException("Data Tidak Tersedia");
             }
 
-        } catch (Exception e) {
+        } catch (NasabahException e) {
             System.out.println(e.getMessage());;
         }
     }
@@ -72,12 +72,14 @@ public class NasabahService implements NasabahInterface{
             for (int i = 0; i < nasabahCount; i++) {
                 if (items[i] != null && items[i].getId()==id){
                     temp[i] = null;
+                    System.out.println("Data Berhasil Dihapus");
+                    cariData = true;
                 }
             }
             if (!cariData){
-                throw new Exception("Data Tidak Ada");
+                throw new NasabahException("Data Tidak Ada");
             }
-        } catch (Exception e) {
+        } catch (NasabahException e) {
             System.out.println(e.getMessage());
         }
     }

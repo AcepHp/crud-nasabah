@@ -19,12 +19,13 @@ public class Main {
         service.create(newNasabah4);
         service.create(newNasabah5);
         service.create(newNasabah6);
+        service.read();
 
         Nasabah updateNasabah = new Nasabah(8, "Acep", "12345678905", "082316167554", "2001-09-01");
         service.update(1, updateNasabah);
 
         service.read();
-        service.delete(6);
+        service.delete(9);
 
         service.read();
 
