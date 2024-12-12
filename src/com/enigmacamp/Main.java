@@ -4,10 +4,10 @@ public class Main {
     public static void main(String[] args) {
         Nasabah newNasabah = new Nasabah(1, "Juan", "1234567890", "082332234", "2009-01-01");
         Nasabah newNasabah2 = new Nasabah(2, "Juan", "12345678900", "0823322340", "2009-01-01");
-        Nasabah newNasabah3 = new Nasabah(1, "Juan", "1234567890", "082332234", "2009-01-01");
-        Nasabah newNasabah4 = new Nasabah(1, "Juan", "1234567890", "082332234", "2009-01-01");
-        Nasabah newNasabah5 = new Nasabah(1, "Juan", "1234567890", "082332234", "2009-01-01");
-        Nasabah newNasabah6 = new Nasabah(1, "Juan", "1234567890", "082332234", "2009-01-01");
+        Nasabah newNasabah3 = new Nasabah(3, "Juan", "12345678901", "0823322341", "2009-01-01");
+        Nasabah newNasabah4 = new Nasabah(4, "Juan", "12345678902", "0823322342", "2009-01-01");
+        Nasabah newNasabah5 = new Nasabah(5, "Juan", "12345678903", "0823322343", "2009-01-01");
+        Nasabah newNasabah6 = new Nasabah(6, "Juan", "12345678904", "0823322344", "2009-01-01");
 
 
         NasabahService service = new NasabahService();
@@ -20,7 +20,11 @@ public class Main {
         service.create(newNasabah5);
         service.create(newNasabah6);
 
+        Nasabah updateNasabah = new Nasabah(8, "Acep", "12345678905", "082316167554", "2001-09-01");
+        service.update(1, updateNasabah);
 
+        service.read();
+        service.delete(6);
 
         service.read();
 

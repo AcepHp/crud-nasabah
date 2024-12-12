@@ -55,5 +55,4 @@ public class Nasabah {
         this.birthDate = birthDate;
     }
 
-
 }

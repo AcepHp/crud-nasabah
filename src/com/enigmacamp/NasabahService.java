@@ -1,6 +1,5 @@
 package com.enigmacamp;
 
-import java.util.Arrays;
 
 //Untuk memanipulasi data nasabah seperti CRUD Nasabah
 public class NasabahService {
@@ -42,7 +41,48 @@ public class NasabahService {
 //            System.out.println(e.getMessage());
 //        }
     }
-//
+    //Update Nasabah
+    public void update(int id, Nasabah nasabahBaru){
+        try {
+            boolean cariData = false;
+            for (int i = 0; i < nasabahCount; i++) {
+                if (items[i] != null && items[i].getId()==id){
+                    if (!isUnik(nasabahBaru.getId(),nasabahBaru.getNik(),nasabahBaru.getPhoneNumber())){
+                        throw new Exception("Data Gagal di Update\n");
+                    }
+                    items[i] = nasabahBaru;
+                    System.out.println("Data Berhasil di Update\n");
+                    cariData = true;
+                    break;
+                }
+            }
+            if (!cariData){
+                throw new Exception("Data Tidak Tersedia");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());;
+        }
+    }
+
+    public void delete(Integer id){
+        try {
+            boolean cariData = false;
+            Nasabah[] temp = getItems();
+            for (int i = 0; i < nasabahCount; i++) {
+                if (items[i] != null && items[i].getId()==id){
+                    temp[i] = null;
+                }
+            }
+            if (!cariData){
+                throw new Exception("Data Tidak Ada");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+
 
     public Nasabah[] getItems() {
         return items;
@@ -60,11 +100,5 @@ public class NasabahService {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "NasabahService{" +
-                "items=" + Arrays.toString(items) +
-                ", nasabahCount=" + nasabahCount +
-                '}';
-    }
+
 }
