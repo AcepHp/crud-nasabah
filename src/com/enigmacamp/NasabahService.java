@@ -2,7 +2,7 @@ package com.enigmacamp;
 
 
 //Untuk memanipulasi data nasabah seperti CRUD Nasabah
-public class NasabahService {
+public class NasabahService implements NasabahInterface{
     private Nasabah[] items= new Nasabah[5];
     private int nasabahCount = 0;
 
