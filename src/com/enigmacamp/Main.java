@@ -3,45 +3,113 @@ package com.enigmacamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
+        NasabahService service = new NasabahService();
+        InputHandler input = new InputHandler(new Scanner(System.in));
+
+        Nasabah newNasabah = new Nasabah(1, "Juan", "1234567890", "082332234", "2009-01-01");
+        Nasabah newNasabah2 = new Nasabah(2, "Jaja", "12345678900", "0823322340", "2009-01-01");
+        Nasabah newNasabah3 = new Nasabah(3, "Ucup", "12345678901", "0823322341", "2009-01-01");
+        Nasabah newNasabah4 = new Nasabah(4, "Jeje", "12345678902", "0823322342", "2009-01-01");
+        Nasabah newNasabah5 = new Nasabah(5, "Nana", "12345678903", "0823322343", "2009-01-01");
+
+        service.create(newNasabah);
+        service.create(newNasabah2);
+        service.create(newNasabah3);
+        service.create(newNasabah4);
+        service.create(newNasabah5);
         try {
-            // Data Nasabah
-            Nasabah newNasabah = new Nasabah(1, "Juan", "1234567890", "082332234", "2009-01-01");
-            Nasabah newNasabah2 = new Nasabah(2, "Acep", "12345678900", "0823322340", "2009-01-01");
-            Nasabah newNasabah3 = new Nasabah(3, "Ucup", "12345678901", "0823322341", "2009-01-01");
-            Nasabah newNasabah4 = new Nasabah(4, "Jeje", "12345678902", "0823322342", "2009-01-01");
-            Nasabah newNasabah5 = new Nasabah(5, "Nana", "12345678903", "0823322343", "2009-01-01");
+            while (true){
+                System.out.println("========== Menu Nasabah ==========");
+                System.out.println("1. Lihat Data");
+                System.out.println("2. Tambah Data");
+                System.out.println("3. Update Data");
+                System.out.println("4. Hapus Data");
+                System.out.println("5. Keluar");
+                int pilih = input.GetInt("Masukkan Angka 1-4 : ");
+                switch (pilih){
+                    case 1 :
+                        System.out.println("Data Nasabah : ");
+                        service.read();
+                        break;
+                    case 2:
+                        int id = input.GetInt("Input ID : ");
+                        String fullName = input.getString("Input FullName : ");
+                        String nik = input.getString("Input NIK : ");
+                        String phoneNumber = input.getString("Input No.HP :");
+                        String birthDate = input.getString("Input Birth Date :");
 
-            NasabahService service = new NasabahService();
+                        Nasabah nasabah = new Nasabah(id,fullName, nik, phoneNumber,birthDate);
 
-            // Tambah Data Nasabah
-            service.create(newNasabah);
-            service.create(newNasabah2);
-            service.create(newNasabah3);
-            service.create(newNasabah4);
-            service.create(newNasabah5);
+                        service.create(nasabah);
+                        break;
+                    case 3:
+                        int idUpdate = input.GetInt("Input ID Yang Mau di Edit :");
+                        String fullNameUpdate = input.getString("Input FullName : ");
+                        String nikUpdate = input.getString("Input NIK : ");
+                        String phoneNumberUpdate = input.getString("Input No.HP :");
+                        String birthDateUpdate = input.getString("Input Birth Date :");
 
-            // Menampilkan Data
-            System.out.println("\nData Nasabah : ");
-            service.read();
+                        Nasabah nasabahBaru = new Nasabah( fullNameUpdate, nikUpdate, phoneNumberUpdate, birthDateUpdate);
 
-            //Update Data
-            Nasabah updateNasabah = new Nasabah(20,"Acep", "123456231323", "08332167554", "2001-09-01");
-            service.update(1,updateNasabah);
-            service.read();
+                        service.update(idUpdate, nasabahBaru);
+                        break;
+                    case 4:
+//                        service.delete();
+                        int id3 = input.GetInt("Input ID Yang akan dihapus : ");
+                        service.delete(id3);
+                        break;
+                    case 5:
+                        System.out.println("Keluar Dari Aplikasi");
+                        return;
+                    default:
+                        System.out.println("Pilihan Tidak Tersedia");
+                        break;
+                }
 
-            //Menghapus Data
-            service.delete(3);
+            }
+//
 
-            service.read();
-
-        }catch (NasabahException e){
+        }catch (Exception e){
             System.out.println(e.getMessage());
         }
     }
+
+//    public static void main(String[] args) {
+        // Data Nasabah
+//            Nasabah newNasabah = new Nasabah(1, "Juan", "1234567890", "082332234", "2009-01-01");
+//            Nasabah newNasabah2 = new Nasabah(2, "Jaja", "12345678900", "0823322340", "2009-01-01");
+//            Nasabah newNasabah3 = new Nasabah(3, "Ucup", "12345678901", "0823322341", "2009-01-01");
+//            Nasabah newNasabah4 = new Nasabah(4, "Jeje", "12345678902", "0823322342", "2009-01-01");
+//            Nasabah newNasabah5 = new Nasabah(5, "Nana", "12345678903", "0823322343", "2009-01-01");
+//
+//            NasabahService service = new NasabahService();
+//
+//            // Tambah Data Nasabah
+//            service.create(newNasabah);
+//            service.create(newNasabah2);
+//            service.create(newNasabah3);
+//            service.create(newNasabah4);
+//            service.create(newNasabah5);
+//
+//            // Menampilkan Data
+//            System.out.println("\nData Nasabah : ");
+//            service.read();
+//
+//            //Update Data
+//            Nasabah updateNasabah = new Nasabah("Acep", "123456231323", "08332167554", "2001-09-01");
+//            service.update(1,updateNasabah);
+//            service.read();
+//
+//            //Menghapus Data
+//            service.delete(3);
+//
+//            service.read();
+//    }
 //    public static void main(String[] args) {
 
 

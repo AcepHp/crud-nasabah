@@ -11,7 +11,7 @@ public class NasabahService implements NasabahInterface {
 
 //    private Nasabah[] items= new Nasabah[15];
 
-    private int nasabahCount = 0;
+//    private int nasabahCount = 0;
 
     public NasabahService() {
     }
@@ -36,7 +36,7 @@ public class NasabahService implements NasabahInterface {
     public void create(Nasabah nasabah) {
         if (isUnik(nasabah.getId(), nasabah.getNik(), nasabah.getPhoneNumber())){
             this.items.add(nasabah);
-            System.out.println("Data Berhasil Ditambahkan");
+//            System.out.println("Data Berhasil Ditambahkan");
         }
     }
 

@@ -14,6 +14,12 @@ public class Nasabah {
         this.phoneNumber = phoneNumber;
         this.birthDate = birthDate;
     }
+    public Nasabah(String fullName, String nik, String phoneNumber, String birthDate) {
+        this.fullName = fullName;
+        this.nik = nik;
+        this.phoneNumber = phoneNumber;
+        this.birthDate = birthDate;
+    }
 
     public int getId() {
         return id;
