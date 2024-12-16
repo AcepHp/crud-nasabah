@@ -1,132 +1,239 @@
 package com.enigmacamp;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 //Untuk memanipulasi data nasabah seperti CRUD Nasabah
-public class NasabahService implements NasabahInterface{
-    private Nasabah[] items= new Nasabah[15];
+public class NasabahService implements NasabahInterface {
 
-    private int nasabahCount = 0;
+    private ArrayList<Nasabah> items = new ArrayList<>();
 
-    public NasabahService(){}
+//    private Nasabah[] items= new Nasabah[15];
+
+//    private int nasabahCount = 0;
+
+    public NasabahService() {
+    }
 
     //Menampilkan Data Nasabah
-    public Nasabah[] read() {
-        Nasabah[] result = new Nasabah[this.items.length];
-
-        Integer index = 0;
-        for (int i = 0; i < this.items.length; i++) {
-            if (this.items != null){
-                result[index++] = this.items[i];
-            }
-        }
-        return result;
-    }
-
-    public Nasabah readById(int id){
-        Nasabah result = null;
-        for (int i = 0; i < this.items.length; i++) {
-            if (this.items[i] != null){
-                if (this.items[i].getId() == id){
-                    result = this.items[i];
-                    break;
-                }
-            }
-
-        }
-        if(result != null){
-            return result;
-        } else {
-            throw new NasabahException("Data tidak ditemukan");
+    public void read() {
+        for (Nasabah item : items) {
+            System.out.println(item);
         }
     }
 
-    //Registrasi Nasabah
-    public void create(Nasabah nasabah){
-
-            //Validasi array belum penuh
-            if (this.nasabahCount >= this.items.length){
-                throw new ArrayIndexOutOfBoundsException("Kapasitas Penuh");
+    public Nasabah readById(int id) {
+        for (Nasabah nasabah : this.items) {
+            if (nasabah != null && nasabah.getId() == id) {
+                return nasabah;
             }
-            //Validasi unique id, nik, phoneNumbe
-            if (!isUnik(nasabah.getId(), nasabah.getNik(), nasabah.getPhoneNumber())){
-                throw new NasabahException("Data sudah tersedia");
-            }
-            //
-            this.items[this.nasabahCount] = nasabah;
-            this.nasabahCount++;
-            System.out.println("Nasabah Berhasil Ditambahkan");
-
+        }
+        throw new NasabahException("Data Tidak Ditemukan");
     }
 
-    //Update Nasabah
-    public void update(int id, Nasabah nasabahBaru){
 
+    public void create(Nasabah nasabah) {
+        if (isUnik(nasabah.getId(), nasabah.getNik(), nasabah.getPhoneNumber())){
+            this.items.add(nasabah);
+//            System.out.println("Data Berhasil Ditambahkan");
+        }
+    }
+
+    @Override
+    public void update(int id, Nasabah nasabahBaru) {
         boolean cariData = false;
-        for (int i = 0; i < this.nasabahCount; i++) {
-            if (this.items[i] != null && this.items[i].getId()==id){
-                if (!isUnik(nasabahBaru.getId(),nasabahBaru.getNik(),nasabahBaru.getPhoneNumber())){
-                    throw new NasabahException("Data Sudah ada, Gagal Update\n");
-                }
-                this.items[i] = nasabahBaru;
-                System.out.println("Data Berhasil di Update\n");
+        for (Nasabah nasabah : items) {
+            if (nasabah != null && nasabah.getId() == id) {
                 cariData = true;
+                if (isUnik(nasabahBaru.getId(), nasabahBaru.getNik(), nasabahBaru.getPhoneNumber())) {
+                    nasabah.setFullName(nasabahBaru.getFullName());
+                    nasabah.setNik(nasabahBaru.getNik());
+                    nasabah.setPhoneNumber(nasabahBaru.getPhoneNumber());
+                    nasabah.setBirthDate(nasabahBaru.getBirthDate());
+                    nasabah.setFullName(nasabahBaru.getFullName());
+                    System.out.println("\nData Berhasil di Update");
+                } else {
+                    throw new NasabahException("Data Tidak Unik, Gagal Update");
+                }
                 break;
             }
+        }if(!cariData){
+            throw new NasabahException("Data Tidak DItemukan");
         }
-        if (!cariData){
-            throw new NasabahException("Data Tidak Tersedia");
-        }
-
     }
-
-    public void delete(Integer id){
-
-        //membuat variable untuk mencari data
-        boolean cariData = false;
-        // Mendapatkan array this.items yang berisi data Nasabah
-        Nasabah[] temp = getItems();
-        for (int i = 0; i < this.nasabahCount; i++) {
-            // cek data tidak null, cek id nasabah cocok dengan yg diari
-            if (this.items[i] != null && this.items[i].getId()==id){
-                //mengubah data menjadi null
-                temp[i] = null;
-                System.out.println("Data Berhasil Dihapus");
-                cariData = true;
-            }
-        }
-        if (!cariData){
-            throw new NasabahException("Data Tidak Ada");
-        }
-
-    }
+//        for (int i = 0; i < this.nasabahCount; i++) {
+//            if (this.items[i] != null && this.items[i].getId()==id){
+//                if (!isUnik(nasabahBaru.getId(),nasabahBaru.getNik(),nasabahBaru.getPhoneNumber())){
+//                    throw new NasabahException("Data Sudah ada, Gagal Update\n");
+//                }
+//                this.items[i] = nasabahBaru;
+//                System.out.println("Data Berhasil di Update\n");
+//                cariData = true;
+//                break;
+//            }
+//        }
+//        if (!cariData){
+//            throw new NasabahException("Data Tidak Tersedia");
+//        }
 
 
     @Override
-    public String toString() {
-        return "NasabahService{" +
-                "items=" + Arrays.toString(this.items) +
-                ", nasabahCount=" + this.nasabahCount +
-                '}';
-    }
-
-
-
-    public Nasabah[] getItems() {
-        return this.items;
-    }
-
-    private boolean isUnik(int id, String nik, String phoneNUmber){
+    public void delete(Integer id) {
+        boolean terhapus;
         for (Nasabah nasabah : this.items){
-            if (nasabah != null){
-                if (nasabah.getId()==id || nasabah.getNik().equals(nik) || nasabah.getPhoneNumber().equals(phoneNUmber)){
-                    return false;
+            if (nasabah != null && nasabah.getId() == id){
+                this.items.remove(nasabah);
+                System.out.println("\nData Berhasil Dihapus");
+                terhapus = true;
+                break;
+            }
+        }
+        if (terhapus = false){
+            throw new NasabahException("\nData Gagal Dihapus");
+        }
+    }
+
+    @Override
+    public Nasabah[] getItems() {
+        return new Nasabah[0];
+    }
+
+    private boolean isUnik(int id, String nik, String phoneNUmber) {
+        for (Nasabah nasabah : this.items) {
+            if (nasabah != null) {
+//                if (nasabah.getId() == id || nasabah.getNik().equals(nik) || nasabah.getPhoneNumber().equals(phoneNUmber)) {
+//                    return false;
+//                }
+                if (nasabah.getId() == id){
+                    throw new NasabahException("Data ID Sudah Ada");
+                } else if (nasabah.getNik() == nik) {
+                    throw new NasabahException("Data NIK Sudah Ada");
+                } else if (nasabah.getPhoneNumber() == phoneNUmber) {
+                    throw new NasabahException("Data Phone Number Sudah Ada");
                 }
             }
 
         }
         return true;
     }
-
 }
+
+//    @Override
+//    public Nasabah getItems() {
+//        return new Nasabah[0];
+//    }
+
+//        Integer index = 0;
+//        for (int i = 0; i < this.items.length; i++) {
+//            if (this.items != null){
+//                result[index++] = this.items[i];
+//            }
+//        }
+//        return result;
+//        return null;
+//    }
+
+
+//        for (int i = 0; i < this.items; i++) {
+//            if (this.items[i] != null){
+//                if (this.items[i].getId() == id){
+//                    result = this.items[i];
+//                    break;
+//                }
+//            }
+//
+//        }
+//        if(result != null){
+//            return result;
+//        } else {
+//            throw new NasabahException("Data tidak ditemukan");
+//        }
+//    }
+
+    //Registrasi Nasabah
+//    public void create(Nasabah nasabah){
+//
+//
+//            //Validasi array belum penuh
+//            if (this.nasabahCount >= this.items.length){
+//                throw new ArrayIndexOutOfBoundsException("Kapasitas Penuh");
+//            }
+//            //Validasi unique id, nik, phoneNumbe
+//            if (!isUnik(nasabah.getId(), nasabah.getNik(), nasabah.getPhoneNumber())){
+//                throw new NasabahException("Data sudah tersedia");
+//            }
+//            //
+//            this.items[this.nasabahCount] = nasabah;
+//            this.nasabahCount++;
+//            System.out.println("Nasabah Berhasil Ditambahkan");
+//
+//    }
+
+    //Update Nasabah
+//    public void update(int id, Nasabah nasabahBaru){
+//
+//        boolean cariData = false;
+//        for (int i = 0; i < this.nasabahCount; i++) {
+//            if (this.items[i] != null && this.items[i].getId()==id){
+//                if (!isUnik(nasabahBaru.getId(),nasabahBaru.getNik(),nasabahBaru.getPhoneNumber())){
+//                    throw new NasabahException("Data Sudah ada, Gagal Update\n");
+//                }
+//                this.items[i] = nasabahBaru;
+//                System.out.println("Data Berhasil di Update\n");
+//                cariData = true;
+//                break;
+//            }
+//        }
+//        if (!cariData){
+//            throw new NasabahException("Data Tidak Tersedia");
+//        }
+//
+//    }
+
+//    public void delete(Integer id){
+//
+//        //membuat variable untuk mencari data
+//        boolean cariData = false;
+//        // Mendapatkan array this.items yang berisi data Nasabah
+//        Nasabah[] temp = getItems();
+//        for (int i = 0; i < this.nasabahCount; i++) {
+//            // cek data tidak null, cek id nasabah cocok dengan yg diari
+//            if (this.items[i] != null && this.items[i].getId()==id){
+//                //mengubah data menjadi null
+//                temp[i] = null;
+//                System.out.println("Data Berhasil Dihapus");
+//                cariData = true;
+//            }
+//        }
+//        if (!cariData){
+//            throw new NasabahException("Data Tidak Ada");
+//        }
+//
+//    }
+
+
+//    @Override
+//    public String toString() {
+//        return "NasabahService{" +
+//                "items=" + Arrays.toString(this.items) +
+//                ", nasabahCount=" + this.nasabahCount +
+//                '}';
+//    }
+//
+//
+//
+//    public Nasabah[] getItems() {
+//        return this.items;
+//    }
+//
+//    private boolean isUnik(int id, String nik, String phoneNUmber){
+//        for (Nasabah nasabah : this.items){
+//            if (nasabah != null){
+//                if (nasabah.getId()==id || nasabah.getNik().equals(nik) || nasabah.getPhoneNumber().equals(phoneNUmber)){
+//                    return false;
+//                }
+//            }
+//
+//        }
+//        return true;
