@@ -1,8 +1,9 @@
 package com.enigmacamp;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import com.enigmacamp.model.Nasabah;
+import com.enigmacamp.service.NasabahService;
+import com.enigmacamp.utils.InputHandler;
+
 import java.util.Scanner;
 
 public class Main {
@@ -11,18 +12,18 @@ public class Main {
         NasabahService service = new NasabahService();
         InputHandler input = new InputHandler(new Scanner(System.in));
 
-        Nasabah newNasabah = new Nasabah(1, "Juan", "1234567890", "082332234", "2009-01-01");
-        Nasabah newNasabah2 = new Nasabah(2, "Jaja", "12345678900", "0823322340", "2009-01-01");
-        Nasabah newNasabah3 = new Nasabah(3, "Ucup", "12345678901", "0823322341", "2009-01-01");
-        Nasabah newNasabah4 = new Nasabah(4, "Jeje", "12345678902", "0823322342", "2009-01-01");
-        Nasabah newNasabah5 = new Nasabah(5, "Nana", "12345678903", "0823322343", "2009-01-01");
+//        Nasabah newNasabah = new Nasabah(1, "Juan", "1234567890", "082332234", "2009-01-01");
+//        Nasabah newNasabah2 = new Nasabah(2, "Jaja", "12345678900", "0823322340", "2009-01-01");
+//        Nasabah newNasabah3 = new Nasabah(3, "Ucup", "12345678901", "0823322341", "2009-01-01");
+//        Nasabah newNasabah4 = new Nasabah(4, "Jeje", "12345678902", "0823322342", "2009-01-01");
+//        Nasabah newNasabah5 = new Nasabah(5, "Nana", "12345678903", "0823322343", "2009-01-01");
+//
+//        service.create(newNasabah);
+//        service.create(newNasabah2);
+//        service.create(newNasabah3);
+//        service.create(newNasabah4);
+//        service.create(newNasabah5);
 
-        service.create(newNasabah);
-        service.create(newNasabah2);
-        service.create(newNasabah3);
-        service.create(newNasabah4);
-        service.create(newNasabah5);
-        try {
             while (true){
                 System.out.println("========== Menu Nasabah ==========");
                 System.out.println("1. Lihat Data");
@@ -37,26 +38,36 @@ public class Main {
                         service.read();
                         break;
                     case 2:
-                        int id = input.GetInt("Input ID : ");
-                        String fullName = input.getString("Input FullName : ");
-                        String nik = input.getString("Input NIK : ");
-                        String phoneNumber = input.getString("Input No.HP :");
-                        String birthDate = input.getString("Input Birth Date :");
+                        try {
+                            int id = input.GetInt("Input ID : ");
+                            String fullName = input.getString("Input FullName : ");
+                            String nik = input.getString("Input NIK : ");
+                            String phoneNumber = input.getString("Input No.HP :");
+                            String birthDate = input.getString("Input Birth Date :");
 
-                        Nasabah nasabah = new Nasabah(id,fullName, nik, phoneNumber,birthDate);
+                            Nasabah nasabah = new Nasabah(id,fullName, nik, phoneNumber,birthDate);
 
-                        service.create(nasabah);
+                            service.create(nasabah);
+
+                        }catch (Exception e){
+                            System.out.println(e.getMessage());
+                        }
                         break;
                     case 3:
-                        int idUpdate = input.GetInt("Input ID Yang Mau di Edit :");
-                        String fullNameUpdate = input.getString("Input FullName : ");
-                        String nikUpdate = input.getString("Input NIK : ");
-                        String phoneNumberUpdate = input.getString("Input No.HP :");
-                        String birthDateUpdate = input.getString("Input Birth Date :");
+                        try {
+                            int idUpdate = input.GetInt("Input ID Yang Mau di Edit :");
+                            String fullNameUpdate = input.getString("Input FullName : ");
+                            String nikUpdate = input.getString("Input NIK : ");
+                            String phoneNumberUpdate = input.getString("Input No.HP :");
+                            String birthDateUpdate = input.getString("Input Birth Date :");
 
-                        Nasabah nasabahBaru = new Nasabah( fullNameUpdate, nikUpdate, phoneNumberUpdate, birthDateUpdate);
+                            Nasabah nasabahBaru = new Nasabah( fullNameUpdate, nikUpdate, phoneNumberUpdate, birthDateUpdate);
 
-                        service.update(idUpdate, nasabahBaru);
+                            service.update(idUpdate, nasabahBaru);
+                            break;
+                        }catch (Exception e){
+                            System.out.println(e.getMessage());
+                        }
                         break;
                     case 4:
 //                        service.delete();
@@ -74,9 +85,7 @@ public class Main {
             }
 //
 
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
+
     }
 
 //    public static void main(String[] args) {

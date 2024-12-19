@@ -1,4 +1,4 @@
-package com.enigmacamp;
+package com.enigmacamp.utils;
 
 public class NasabahException extends RuntimeException {
     public NasabahException(String message) {
