@@ -1,8 +1,10 @@
-package com.enigmacamp;
+package com.enigmacamp.service;
 
+
+import com.enigmacamp.model.Nasabah;
+import com.enigmacamp.utils.NasabahException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 //Untuk memanipulasi data nasabah seperti CRUD Nasabah
 public class NasabahService implements NasabahInterface {

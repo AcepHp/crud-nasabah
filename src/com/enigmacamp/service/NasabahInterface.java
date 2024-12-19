@@ -1,4 +1,6 @@
-package com.enigmacamp;
+package com.enigmacamp.service;
+
+import com.enigmacamp.model.Nasabah;
 
 public interface NasabahInterface {
     void read();
