@@ -2,6 +2,7 @@ package com.enigmacamp.service;
 
 
 import com.enigmacamp.model.Nasabah;
+import com.enigmacamp.utils.IoHandler;
 import com.enigmacamp.utils.NasabahException;
 
 import java.util.ArrayList;
@@ -10,15 +11,22 @@ import java.util.ArrayList;
 public class NasabahService implements NasabahInterface {
 
     private ArrayList<Nasabah> items = new ArrayList<>();
+    String fileName = "data.txt";
 
 //    private Nasabah[] items= new Nasabah[15];
 
 //    private int nasabahCount = 0;
 
-    public NasabahService() {
+    public NasabahService(ArrayList<Nasabah> items, String fileName) {
+        this.items = items;
+        this.fileName = fileName;
     }
 
-    //Menampilkan Data Nasabah
+    public NasabahService() {
+        IoHandler.checkExistFile(fileName);
+        IoHandler.readFile(items, fileName);
+    }
+
     public void read() {
         for (Nasabah item : items) {
             System.out.println(item);
@@ -38,11 +46,13 @@ public class NasabahService implements NasabahInterface {
     public void create(Nasabah nasabah) {
         if (isUnik(nasabah.getId(), nasabah.getNik(), nasabah.getPhoneNumber())){
             this.items.add(nasabah);
+            IoHandler.addFile(items, fileName);
+            System.out.println("Nasabah " +nasabah+ nasabah.getFullName()+ "Berhasil Ditambahkan");
+            System.out.println();
 //            System.out.println("Data Berhasil Ditambahkan");
         }
     }
 
-    @Override
     public void update(int id, Nasabah nasabahBaru) {
         boolean cariData = false;
         for (Nasabah nasabah : items) {
@@ -55,6 +65,7 @@ public class NasabahService implements NasabahInterface {
                     nasabah.setBirthDate(nasabahBaru.getBirthDate());
                     nasabah.setFullName(nasabahBaru.getFullName());
                     System.out.println("\nData Berhasil di Update");
+                    IoHandler.addFile(items, fileName);
                 } else {
                     throw new NasabahException("Data Tidak Unik, Gagal Update");
                 }
@@ -64,6 +75,7 @@ public class NasabahService implements NasabahInterface {
             throw new NasabahException("Data Tidak DItemukan");
         }
     }
+
 //        for (int i = 0; i < this.nasabahCount; i++) {
 //            if (this.items[i] != null && this.items[i].getId()==id){
 //                if (!isUnik(nasabahBaru.getId(),nasabahBaru.getNik(),nasabahBaru.getPhoneNumber())){
@@ -88,6 +100,7 @@ public class NasabahService implements NasabahInterface {
                 this.items.remove(nasabah);
                 System.out.println("\nData Berhasil Dihapus");
                 terhapus = true;
+                IoHandler.addFile(items, fileName);
                 break;
             }
         }
@@ -96,9 +109,12 @@ public class NasabahService implements NasabahInterface {
         }
     }
 
-    @Override
-    public Nasabah[] getItems() {
-        return new Nasabah[0];
+//    @Override
+//    public Nasabah[] getItems() {
+//        return new Nasabah[0];
+//    }
+    public ArrayList<Nasabah> getItems() {
+        return items;
     }
 
     private boolean isUnik(int id, String nik, String phoneNUmber) {
@@ -120,6 +136,11 @@ public class NasabahService implements NasabahInterface {
         return true;
     }
 }
+
+
+// Read Data I/O
+
+
 
 //    @Override
 //    public Nasabah getItems() {

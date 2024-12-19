@@ -1,5 +1,9 @@
 package com.enigmacamp.utils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class InputHandler {
@@ -8,6 +12,10 @@ public class InputHandler {
     public InputHandler(Scanner scanner) {
         this.scanner = scanner;
     }
+    public InputHandler() {
+
+    }
+
 
     //Input Number atau Input String;
     public int GetInt(String prompt){ //Input price, data will be calculate in the future
@@ -34,4 +42,7 @@ public class InputHandler {
         }
         return result;
     }
+
+
+
 }
