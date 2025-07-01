@@ -1,4 +1,4 @@
-package com.enigmacamp;
+package com.enigmacamp.model;
 
 public class Nasabah {
     private int id;
@@ -9,6 +9,12 @@ public class Nasabah {
 
     public Nasabah(int id, String fullName, String nik, String phoneNumber, String birthDate) {
         this.id = id;
+        this.fullName = fullName;
+        this.nik = nik;
+        this.phoneNumber = phoneNumber;
+        this.birthDate = birthDate;
+    }
+    public Nasabah(String fullName, String nik, String phoneNumber, String birthDate) {
         this.fullName = fullName;
         this.nik = nik;
         this.phoneNumber = phoneNumber;
